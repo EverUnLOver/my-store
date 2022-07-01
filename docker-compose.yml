@@ -1,0 +1,67 @@
+version: '3.3'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+  local_mysql_data: {}
+  local_mysql_data_backups: {}
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: Sebas
+      POSTGRES_PASSWORD: admin32|
+      POSTGRES_DB: my_store
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+      - local_postgres_data_backups:/backups:z
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "50m"
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - default
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=sebastian.herrera@smk.com.co
+      - PGADMIN_DEFAULT_PASSWORD=sebastian.herrera@smk.com.cosebastian.herrera@smk.com.co
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "50m"
+    ports:
+      - "5050:80"
+    restart: always
+  mysql:
+    image: mysql:5
+    environment:
+      MYSQL_ROOT_PASSWORD: admin32|
+      MYSQL_DATABASE: my_store
+      MYSQL_PORT: 3306
+    ports:
+      - 3306:3306
+    volumes:
+      - local_mysql_data:/var/lib/mysql:Z
+      - local_mysql_data_backups:/backups:z
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "50m"
+    restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: admin32|
+    ports:
+      - 8080:80
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "50m"
+    restart: always
