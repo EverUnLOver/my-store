@@ -4,3 +4,4 @@ heroku addons:create heroku-postgresql:hobby-dev
 heroku addons:docs heroku-postgresql
 git checkout -b production
 git push heroku production:main
+heroku run npm run migrations:run
