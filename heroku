@@ -5,3 +5,4 @@ heroku addons:docs heroku-postgresql
 git checkout -b production
 git push heroku production:main
 heroku run npm run migrations:run
+heroku config:set PGSSLMODE=no-verify

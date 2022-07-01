@@ -1,3 +1,5 @@
+const { config } = require('./config/config');
+
 const express = require('express');
 const cors = require('cors');
 const routerApp = require('./routes');
@@ -5,7 +7,7 @@ const routerApp = require('./routes');
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler')
 
 const app = express();
-const port = 3000;
+const port = config.port;
 
 app.use(express.json());
 
