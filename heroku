@@ -1,0 +1,4 @@
+brew tap heroku/brew && brew install heroku
+heroku git:remote -a honest-toque-10385
+heroku addons:create heroku-postgresql:hobby-dev
+heroku addons:docs heroku-postgresql
