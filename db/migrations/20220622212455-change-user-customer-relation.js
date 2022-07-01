@@ -1,7 +1,8 @@
 'use strict';
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require('sequelize');
 
-const { CustomerSchema, CUSTOMER_TABLE } = require('../models/customer.module')
+const { CUSTOMER_TABLE } = require('../models/customer.module');
+const { USER_TABLE } = require('../models/user.module');
 
 module.exports = {
   async up (queryInterface) {
@@ -9,7 +10,13 @@ module.exports = {
       allowNull: false,
       type: DataTypes.INTEGER,
       field: 'user_id',
-      unique: true
+      references: {
+        model: USER_TABLE,
+        key: 'id',
+      },
+      unique: true,
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     })
   },
 
