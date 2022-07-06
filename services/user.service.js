@@ -22,6 +22,19 @@ class UserService {
     //     });
     //   }
     // }
+    // create(data){
+    //   const newUser = {
+    //     id: faker.datatype.uuid(),
+    //     ...data
+    //   }
+    //   this.users.push(newUser)
+    //   return newUser
+    // }
+    async create(data) {
+      const newUser = await models.User.create(data);
+      delete newUser.dataValues.password;
+      return newUser;
+    }
     // async find(){
     //   const query = `SELECT * FROM tasks`;
     //   const [
@@ -36,6 +49,13 @@ class UserService {
     async find() {
       const rta = await models.User.findAll({
         include: ['customer']
+      });
+      return rta;
+    }
+    async findByEmail(email) {
+      const rta = await models.User.findOne({
+        include: ['customer'],
+        where: { email },
       });
       return rta;
     }
@@ -55,18 +75,6 @@ class UserService {
         throw boom.notFound("User not found")
       };
       return user;
-    }
-    // create(data){
-    //   const newUser = {
-    //     id: faker.datatype.uuid(),
-    //     ...data
-    //   }
-    //   this.users.push(newUser)
-    //   return newUser
-    // }
-    async create(data) {
-      const newUser = await models.User.create(data);
-      return newUser;
     }
     // update(id, changes){
     //   const index = this.users.findIndex(item => item.id = id);
